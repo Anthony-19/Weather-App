@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+export const dmSans = DM_Sans({
   subsets: ["latin"],
+  weight: ["300", "500", "600", "700"],
+  style: ["normal", "italic"], // enables 600i
+  variable: "--font-dm-sans",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+export const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-bricolage",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,8 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body className={`${bricolageGrotesque.variable} ${dmSans.variable}`}>
+        <div className="container">
+          {children}
+        </div>
       </body>
     </html>
   );
