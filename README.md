@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌦️ Weather Forecast App
 
-## Getting Started
+A modern weather forecast application built with **Next.js** that allows users to search for cities and view **current weather**, **daily forecasts**, and **hourly forecasts**, with support for **unit conversions** (temperature, wind speed, and precipitation).
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+* 🌍 Search weather by city and country
+* ☀️ Current weather conditions with icons
+* 📅 7-day daily forecast
+* ⏰ Hourly forecast by selected day
+* 🌡️ Temperature unit toggle (°C / °F)
+* 🌬️ Wind speed unit toggle (km/h / mph)
+* 🌧️ Precipitation unit toggle (mm / inches)
+* 🔄 Dynamic unit conversion without refetching data
+* ⏳ Loading states for better UX
+
+---
+
+## 🛠️ Tech Stack
+
+* **Next.js** (App Router)
+* **React** (Client Components)
+* **TypeScript**
+* **CSS Modules**
+* **Open-Meteo API** (weather data)
+
+---
+
+## 📁 Project Structure
+
+```
+app/
+ ├── components/
+ │    ├── Header.tsx
+ │    ├── Weather.tsx
+ │    └── ErrorState.tsx
+ ├── page.tsx
+ ├── page.module.css
+utils/
+ └── conversions.ts
+public/
+ └── assets/images/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔄 Unit Conversions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app handles unit conversion on the client side:
 
-## Learn More
+* **Celsius → Fahrenheit**
+  `(°C × 9/5) + 32`
 
-To learn more about Next.js, take a look at the following resources:
+* **km/h → mph**
+  `km/h × 0.621371`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **mm → inches**
+  `mm ÷ 25.4`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+These conversions are centralized in a utility file for clean and reusable code.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Installation & Setup
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/weather-app.git
+```
+
+2. Navigate to the project folder:
+
+```bash
+cd weather-app
+```
+
+
+
+
+## 🌐 API Used
+
+This project uses the **Open-Meteo API**, which provides free weather data without requiring an API key.
+
+---
+
+## 📌 Future Improvements
+
+* Add geolocation-based weather detection
+* Improve accessibility (ARIA support)
+* Add dark mode
+* Cache weather responses for performance
+* Add error handling for invalid city searches
+
+---
+
+
+## 📄 License
+
+This project is open-source and available under the **MIT License**.
+
+---
+
+Feel free to fork, modify, and improve this project 🚀
