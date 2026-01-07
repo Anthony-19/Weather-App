@@ -16,7 +16,7 @@ export function ErrorState({ error, setError }: { error: any; setError: (error: 
         />
       <h2>Something went wrong.</h2>
       <p>
-        We couldn't connect to the server {`${error.name}`}. Please try again in a few moments.
+        We couldn't connect to the server {`${error.name ? error.name : ""}`}. Please try again in a few moments.
       </p>
 
       <button className={styles.retryButton} onClick={onRetry}>
