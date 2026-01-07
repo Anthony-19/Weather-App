@@ -73,15 +73,17 @@
   width: 13rem;
   border-radius: 0.6rem;
   padding: 0.5rem;
-  z-index: 100000;
+  z-index: 10000;
   opacity: 0;
   transition: all 0.8s ease;
   height: 0;
+  pointer-events: none;
  }
 
  .unitOptionsContainer.active{
   opacity: 1;
   height: auto;
+  pointer-events: auto;
  }
 /* .unitOption{
   position: absolute;
