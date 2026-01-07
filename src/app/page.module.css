@@ -518,6 +518,7 @@ background-color: var(--Neutral-700);
   justify-content: center;
   gap: 1rem;
   margin-top: 4rem;
+  z-index: 100000000;
 }
 
 .retryButton{
@@ -535,6 +536,7 @@ background-color: var(--Neutral-700);
   color: var(--Neutral-0);
   background-color: var(--Neutral-700);
   cursor: pointer;
+  z-index: 10000000000;
 }
 
 
