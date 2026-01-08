@@ -3,6 +3,15 @@ import styles from "../app/page.module.css";
 import Image from "next/image";
 import type { JSX } from "react";
 import { useState } from "react";
+
+interface HeaderProps {
+  selectDegree: string;
+  setSelectDegree: (degree: string) => void;
+  selectMeter: string;
+  setSelectMeter: (meter: string) => void;
+  selectPresciption: string; 
+  setSelectPresciption: (prescription: string) => void;
+}
 export function Header({
   selectDegree,
   setSelectDegree,
@@ -10,7 +19,7 @@ export function Header({
   setSelectMeter,
   selectPresciption,
   setSelectPresciption
-} : any): JSX.Element {
+} : HeaderProps): JSX.Element {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleDropdown = () => {
@@ -18,15 +27,15 @@ export function Header({
   };
 
   
-  const selectDegrees = (option:any) => {
+  const selectDegrees = (option:string) => {
     setSelectDegree(option)
   }
 
-  const selectUnit = (option:any) => {
+  const selectUnit = (option:string) => {
     setSelectMeter(option)
   }
 
-  const selectPrescp = (option:any) => {
+  const selectPrescp = (option:string) => {
     setSelectPresciption(option)
   } 
 

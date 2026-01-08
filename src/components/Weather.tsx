@@ -4,7 +4,22 @@ import styles from "../app/page.module.css";
 import Image from "next/image";
 import type { JSX } from "react";
 import { useState } from "react";
+import { City } from "@/types/setCity";
 
+interface WeatherProps {
+  weather: any;
+  setWeather: (results: any) => void;
+  selectedCity: City | null;
+  setSelectedCity: (city: City | null) => void;
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
+  selectDegree: string;
+  setSelectDegree: (degree: string) => void;
+  selectMeter: string;
+  setSelectMeter: (meter: string) => void;
+  selectPresciption: string;
+  setSelectPresciption: (prescription: string) => void;
+}
 export function Weather({
   weather,
   setWeather,
@@ -12,13 +27,13 @@ export function Weather({
   setSelectedCity,
   isLoading,
   setIsLoading,
-   selectDegree,
-          setSelectDegree,
-          selectMeter,
-          setSelectMeter,
-          selectPresciption,
-          setSelectPresciption
-}: any): JSX.Element {
+  selectDegree,
+  setSelectDegree,
+  selectMeter,
+  setSelectMeter,
+  selectPresciption,
+  setSelectPresciption,
+}: WeatherProps): JSX.Element {
   const getWeatherIcon = (code: number): string => {
     if (code === 0) return "/assets/images/icon-sunny.webp"; // Clear sky
     else if (code === 1 || code === 2 || code === 3)
@@ -39,19 +54,18 @@ export function Weather({
   const [dropDown, setDropDown] = useState(false);
 
   const handleDropdown = (): void => {
-    setDropDown((prev) => !prev);
+    setDropDown((prev:boolean) => !prev);
   };
 
-  const [selectDayIndex, setSelectDayIndex] = useState(0);
-  const [selectDateLabel, setSelectDateLabel] = useState<any>(null);
+  const [selectDayIndex, setSelectDayIndex] = useState<number>(0);
+  const [selectDateLabel, setSelectDateLabel] = useState<string | null>(null);
 
   const selectHourlyDate = (index: number, date: string): void => {
     setSelectDayIndex(index);
     setSelectDateLabel(
       new Date(date).toLocaleDateString("en-US", {
-        weekday: "long"
+        weekday: "long",
       })
-      
     );
     setDropDown(false);
   };
@@ -81,8 +95,7 @@ export function Weather({
           <section className={styles.currentWeatherSection}>
             <div className={styles.locationInfo}>
               <h4>
-                {`${selectedCity.name}, ${selectedCity.country}` ||
-                  "Berlin, Germany"}
+                {selectedCity ? `${selectedCity.name}, ${selectedCity.country}` : "Berlin, Germany"}
               </h4>
               <p>
                 {new Date(weather?.current?.time).toLocaleDateString("en-US", {
@@ -113,7 +126,12 @@ export function Weather({
               <h5>-</h5>
             ) : (
               <h5>
-                {selectDegree === "fahrenheit" ? Math.round((weather?.current?.apparent_temperature  * 1.8) + 32) || 65 : Math.round((weather?.current?.apparent_temperature))}°
+                {selectDegree === "fahrenheit"
+                  ? Math.round(
+                      weather?.current?.apparent_temperature * 1.8 + 32
+                    ) || 65
+                  : Math.round(weather?.current?.apparent_temperature)}
+                °
               </h5>
             )}
           </div>
@@ -133,10 +151,12 @@ export function Weather({
               <h5>-</h5>
             ) : (
               <h5>
-                {
-                selectMeter === "mph" ? Math.round(weather?.current?.wind_speed_10m * 0.621371) : weather?.current?.wind_speed_10m} {" "}
-                 {selectMeter === "mph" ? "mph" : weather?.current_units?.wind_speed_10m}
-              
+                {selectMeter === "mph"
+                  ? Math.round(weather?.current?.wind_speed_10m * 0.621371)
+                  : weather?.current?.wind_speed_10m}{" "}
+                {selectMeter === "mph"
+                  ? "mph"
+                  : weather?.current_units?.wind_speed_10m}
               </h5>
             )}
           </div>
@@ -147,8 +167,14 @@ export function Weather({
               <h5>-</h5>
             ) : (
               <h5>
-                {selectPresciption === "in" ? Math.round(weather?.current?.precipitation * 0.0393701).toFixed(2) : Math.round(weather?.current?.precipitation).toFixed(2)} {" "}
-                {selectPresciption === "in" ? "in" : weather?.current_units?.precipitation}
+                {selectPresciption === "in"
+                  ? Math.round(
+                      weather?.current?.precipitation * 0.0393701
+                    ).toFixed(2)
+                  : Math.round(weather?.current?.precipitation).toFixed(2)}{" "}
+                {selectPresciption === "in"
+                  ? "in"
+                  : weather?.current_units?.precipitation}
               </h5>
             )}
           </div>
@@ -160,10 +186,10 @@ export function Weather({
             {isLoading
               ? Array(7)
                   .fill(0)
-                  .map((_, index) => (
+                  .map((_, index: number) => (
                     <div className={styles.dailyForecastItem} key={index}></div>
                   ))
-              : weather?.daily?.time.map((date: any, index: any) => (
+              : weather?.daily?.time.map((date: string, index: number) => (
                   <div className={styles.dailyForecastItem} key={index}>
                     <p>
                       {new Date(date).toLocaleDateString("en-US", {
@@ -199,9 +225,10 @@ export function Weather({
               <p>-</p>
             ) : (
               <p>
-                {selectDateLabel ?? new Date(weather?.current?.time).toLocaleDateString("en-US", {
-                  weekday: "long",
-                })}
+                {selectDateLabel ??
+                  new Date(weather?.current?.time).toLocaleDateString("en-US", {
+                    weekday: "long",
+                  })}
               </p>
             )}
             <Image
@@ -218,8 +245,8 @@ export function Weather({
                   dropDown ? ` ${styles.active}` : ""
                 }`}
               >
-                {weather?.daily?.time?.map((date: any, index: any) => (
-                  <p key={index} onClick={() => selectHourlyDate(index,date)}>
+                {weather?.daily?.time?.map((date: string, index: number) => (
+                  <p key={index} onClick={() => selectHourlyDate(index, date)}>
                     {new Date(date).toLocaleDateString("en-US", {
                       weekday: "long",
                     })}
@@ -241,7 +268,7 @@ export function Weather({
           {isLoading
             ? Array(12)
                 .fill(0)
-                .map((_, index) => (
+                .map((_, index: number) => (
                   <section className={styles.hourlyItem} key={index}></section>
                 ))
             : weather?.hourly?.time &&

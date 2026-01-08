@@ -2,20 +2,22 @@ import Image from "next/image";
 import { useEffect, type JSX } from "react";
 import styles from "../app/page.module.css";
 import { ErrorState } from "./ErrorState";
+import { City } from "@/types/setCity";
+import { WeatherData } from "@/types/weatherData";
 
 interface SearchProps {
   city: string;
-  setCity: (city: any) => void;
-  selectedCity: any;
-  setSelectedCity: (city: any) => void;
+  setCity: (city: string) => void;
+  selectedCity: City | null;
+  setSelectedCity: (city: City | null) => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
-  cityResults: any;
-  setCityResults: (results: any) => void;
-  weather: any;
-  setWeather: (results: any) => void;
-  error: any;
-  setError: (error: any) => void;
+  cityResults: City[];
+  setCityResults: (results: City[]) => void;
+  weather: WeatherData | null;
+  setWeather: (results: WeatherData | null) => void;
+  error: string | null;
+  setError: (error: string | null) => void;
 }
 
 export function Search({
@@ -32,6 +34,7 @@ export function Search({
   error,
   setError,
 }: SearchProps): JSX.Element {
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCity(e.target.value);
     setCityResults([]);
@@ -71,8 +74,8 @@ export function Search({
       }
 
       
-       const data = await response.json();
-      console.log(data);
+      const data = await response.json();
+      console.log("Hello data", data);
       
     
        if (!data.results || data.results.length === 0) {
@@ -98,7 +101,7 @@ export function Search({
     }
   };
 
-  const selectedCountry = (cityObj: any) => {
+  const selectedCountry = (cityObj: City): void =>  {
     // const selectedText = cityResults.find((item: any) => item.name === city);
     // if (selectedText) {
     setSelectedCity(cityObj);
@@ -117,7 +120,7 @@ export function Search({
     }
     setIsLoading(true);
     try {
-      const { latitude, longitude } = selectedCity;
+      const { latitude , longitude}:{ latitude: number, longitude:number } = selectedCity;
       if (
         typeof latitude !== "number" ||
         typeof longitude !== "number" ||
@@ -177,7 +180,7 @@ export function Search({
         <section className={styles.searchResults}>
           {cityResults.length > 0 && (
             <div className={styles.searchResultsList}>
-              {cityResults.map((result: any, index: number) => (
+              {cityResults.map((result: City, index: number) => (
                 // <p key={index} className={styles.searchResultItem} onClick={(e) => selectedCountry(e, result.name)}>{result.name}, {result.country}</p>
                 <p
                   key={index}

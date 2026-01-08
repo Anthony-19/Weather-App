@@ -6,14 +6,15 @@ import { Search } from "@/components/Search";
 import { Weather } from "@/components/Weather";
 import {useState, useEffect} from "react";
 import { ErrorState } from "@/components/ErrorState";
-
+import { City } from "@/types/setCity";
+import { WeatherData } from "@/types/weatherData";
 export default function Home() {
   const [city, setCity] = useState<string>("");
-  const [selectedCity, setSelectedCity] = useState<any>([]);
-  const [cityResults, setCityResults] = useState<any>([]);
-  const [weather, setWeather] = useState<any>(null);
-  const  [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const [cityResults, setCityResults] = useState<City[]>([]);
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectDegree, setSelectDegree] = useState<string>("celsius");
   const [selectMeter, setSelectMeter] = useState<string>("kilo");
   const [selectPresciption, setSelectPrescription] = useState<string>("mm");
